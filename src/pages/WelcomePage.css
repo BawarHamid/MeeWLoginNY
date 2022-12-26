@@ -1,0 +1,27 @@
+.welcomeCard {
+  width: 350px;
+  margin: auto;
+  margin-top: auto;
+  padding-bottom: auto;
+  /* længden af card */
+}
+
+/* ion-avatar {
+  width: 250px;
+  height: 200px;
+  margin: 0 auto;
+  margin-top: 30px;
+} */
+
+ion-button {
+  margin-top: 40px;
+  margin-bottom: -40px;
+  padding-bottom: 2%;
+  width: 300px;
+}
+
+.meewlinkWCP {
+  margin: 0 auto;
+  margin-top: 25px;
+  width: 250px;
+}
