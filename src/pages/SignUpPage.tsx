@@ -19,13 +19,9 @@ import {
 import { personAddOutline } from "ionicons/icons";
 import "./SignUpPage.css";
 
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "../supabaseConfig";
+import { Link } from "react-router-dom";
 
-// Create a single supabase client for interacting with your database
-const supabase = createClient(
-  "https://vylxztnmdgqgpddzeocv.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ5bHh6dG5tZGdxZ3BkZHplb2N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzIwMTA0NzgsImV4cCI6MTk4NzU4NjQ3OH0.tAgJ2XcH7HPgEwtPqkQNrnGsMM6QtCsfIsgQNOA6844"
-);
 const SignUpPage: React.FC = () => {
   // const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -94,7 +90,9 @@ const SignUpPage: React.FC = () => {
             </IonButton>
           </div>
           <div className="meewlinkSP">
-            <a href="/login">Already Registered? Click here to login</a>
+            <p>
+              Already Registered User? <Link to="login">Login</Link>
+            </p>
           </div>
         </IonCardContent>
       </IonContent>

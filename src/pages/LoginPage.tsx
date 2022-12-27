@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   IonButton,
   IonContent,
-  IonHeader,
+  useIonToast,
   IonInput,
   IonItem,
   IonLabel,
@@ -18,30 +18,37 @@ import {
 } from "@ionic/react";
 import { logInOutline, lockClosedOutline, mailOutline } from "ionicons/icons";
 import "./LoginPage.css";
-import { createClient } from "@supabase/supabase-js";
-import { useHistory } from "react-router-dom";
-// Create a single supabase client for interacting with your database
-const supabase = createClient(
-  "https://vylxztnmdgqgpddzeocv.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ5bHh6dG5tZGdxZ3BkZHplb2N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzIwMTA0NzgsImV4cCI6MTk4NzU4NjQ3OH0.tAgJ2XcH7HPgEwtPqkQNrnGsMM6QtCsfIsgQNOA6844"
-);
+
+// import { LoginAsync } from "../supabaseConfig";
+import { supabase } from "../supabaseConfig";
+import { Link, useHistory } from "react-router-dom";
+
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
-  const [showToast, setShowToast] = useState(false);
-  console.log(supabase);
+  console.log(
+    `${supabase ? "You are now logged in" : "Invalid E-mail or Password"}`
+  );
+  // const history = useHistory();
+  // const [showToast, setShowToast] = useState(false);
 
-  const handleLogin = () => {
-    if (email === email && password === password) {
-      // navigate to the home page
-      // replace 'HomePage' with the name of your home page component
-      history.push("/home");
-    } else {
-      // show an error toast if the login fails
-      setShowToast(true);
-    }
-  };
+  // const handleLogin = () => {
+  //   if (email === email && password === password) {
+  //     // navigate to the home page
+  //     // replace 'HomePage' with the name of your home page component
+  //     history.push("/home");
+  //   } else {
+  //     // show an error toast if the login fails
+  //     setShowToast(true);
+  //   }
+  // };
+
+  // async function LoginUser() {
+  //   const result = await LoginAsync(email, password);
+  //   // console.log(
+  //   //   `${result ? "You are now logged in" : "Invalid E-mail or Password"}`
+  //   // );
+  // }
 
   return (
     <IonPage>
@@ -65,7 +72,7 @@ const LoginPage: React.FC = () => {
           <IonLabel position="floating">Email:</IonLabel>
           <IonInput
             onIonChange={(e) => setEmail(e.detail.value ?? "")}
-            value={email}
+            // value={email}
             placeholder="Enter e-mail"
             type="email"
           />
@@ -77,7 +84,7 @@ const LoginPage: React.FC = () => {
           <IonLabel position="floating">Password:</IonLabel>
           <IonInput
             onIonChange={(e) => setPassword(e.detail.value ?? "")}
-            value={password}
+            // value={password}
             placeholder="Enter password"
             type="password"
           />
@@ -85,8 +92,9 @@ const LoginPage: React.FC = () => {
 
         <div className="ion-text-center">
           <IonButton
-            onClick={() =>
-              supabase.auth.signInWithPassword({ email, password })
+            onClick={
+              () => supabase.auth.signInWithPassword({ email, password })
+              // LoginUser()
             }
             className="loginPageButton"
             color="secondary"
@@ -95,11 +103,11 @@ const LoginPage: React.FC = () => {
             Login
           </IonButton>
         </div>
+        <br />
         <div className="meewlinkLP">
-          <a href="/signup">
-            <br />
-            Don't have an account? Sign up
-          </a>
+          <p>
+            Don't have an account? <Link to="signup">Sign up</Link>
+          </p>
         </div>
       </IonContent>
     </IonPage>
