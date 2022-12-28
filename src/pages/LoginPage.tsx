@@ -19,35 +19,68 @@ import {
 import { logInOutline, lockClosedOutline, mailOutline } from "ionicons/icons";
 import "./LoginPage.css";
 
-// import { LoginAsync } from "../supabaseConfig";
+// import { SignInAsync } from "../supabaseConfig";
 import { supabase } from "../supabaseConfig";
 import { Link, useHistory } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  console.log(
-    `${supabase ? "You are now logged in" : "Invalid E-mail or Password"}`
-  );
-  // const history = useHistory();
-  // const [showToast, setShowToast] = useState(false);
+  const [showToast] = useIonToast();
+  const history = useHistory();
 
-  // const handleLogin = () => {
-  //   if (email === email && password === password) {
-  //     // navigate to the home page
-  //     // replace 'HomePage' with the name of your home page component
-  //     history.push("/home");
-  //   } else {
-  //     // show an error toast if the login fails
-  //     setShowToast(true);
-  //   }
-  // };
+  // console.log(
+  //   `${supabase ? "You are now logged in" : "Invalid E-mail or Password"}`
+  // );
+  async function signInWithEmail() {
+    const user = await supabase
+      .from("User")
+      .select("email, password")
+      .match({ email: email, password: password });
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    console.log(user);
+    if (user!) {
+      showToast({
+        message: "Invalid E-mail or Password",
+        color: "danger",
+        duration: 10000,
+        buttons: [
+          {
+            text: "Dismiss",
+            role: "cancel",
+          },
+        ],
+      });
+    } else {
+      history.push("/home");
+      showToast({
+        message: "You are now logged in!",
+        duration: 6000,
+        color: "success",
+      });
+    }
+
+    // history.push("/home");
+    // showToast({
+    //   message: "You are now logged in!",
+    //   duration: 6000,
+    //   color: "success",
+    // });
+  }
 
   // async function LoginUser() {
-  //   const result = await LoginAsync(email, password);
-  //   // console.log(
-  //   //   `${result ? "You are now logged in" : "Invalid E-mail or Password"}`
-  //   // );
+  //   await SignInAsync(email, password);
+  //     console.log(
+  //       `${supabase ? "You are now logged in" : "Invalid E-mail or Password"}`
+  //     );
+  //     console.log(
+  //       `${result ? "You are now logged in" : "Invalid E-mail or Password"}`
+  //     );
+
   // }
 
   return (
@@ -63,7 +96,7 @@ const LoginPage: React.FC = () => {
           />
           <IonCardHeader>
             <IonCardTitle>Login:</IonCardTitle>
-            <IonCardSubtitle>MeeW Studios Hot</IonCardSubtitle>
+            <IonCardSubtitle>MeeW Studios</IonCardSubtitle>
           </IonCardHeader>
         </IonCard>
         <br />
@@ -71,10 +104,12 @@ const LoginPage: React.FC = () => {
           <IonIcon size="medium" slot="end" icon={mailOutline} />
           <IonLabel position="floating">Email:</IonLabel>
           <IonInput
-            onIonChange={(e) => setEmail(e.detail.value ?? "")}
-            // value={email}
+            // onIonChange={(e) => setEmail(e.detail.value ?? "")}
+            onIonChange={(e) => setEmail(e.detail.value!)}
+            value={email}
             placeholder="Enter e-mail"
             type="email"
+            required
           />
         </IonItem>
         <br />
@@ -83,17 +118,20 @@ const LoginPage: React.FC = () => {
           <IonIcon size="medium" slot="end" icon={lockClosedOutline} />
           <IonLabel position="floating">Password:</IonLabel>
           <IonInput
-            onIonChange={(e) => setPassword(e.detail.value ?? "")}
-            // value={password}
+            // onIonChange={(e) => setPassword(e.detail.value ?? "")}
+            onIonChange={(e) => setPassword(e.detail.value!)}
+            value={password}
             placeholder="Enter password"
             type="password"
+            required
           />
         </IonItem>
 
         <div className="ion-text-center">
           <IonButton
             onClick={
-              () => supabase.auth.signInWithPassword({ email, password })
+              () => signInWithEmail()
+              // supabase.auth.signInWithPassword({ email, password })
               // LoginUser()
             }
             className="loginPageButton"
@@ -111,23 +149,6 @@ const LoginPage: React.FC = () => {
         </div>
       </IonContent>
     </IonPage>
-
-    /* <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Login</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 1</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Login her" />
-      </IonContent>
-    </IonPage> */
   );
 };
 

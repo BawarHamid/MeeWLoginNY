@@ -5,11 +5,23 @@ const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY as string;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function LoginAsync(email: string, password: string) {
+export async function SignInAsync(email: string, password: string) {
   try {
-    const result = await supabase.auth.signInWithPassword({ email, password });
+    const userResult = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    console.log(userResult);
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
 
-    console.log(result);
+export async function SignUpAsync(email: string, password: string) {
+  try {
+    const userResult = await supabase.auth.signUp({ email, password });
+    console.log(userResult);
   } catch (error) {
     console.log(error);
     return false;

@@ -40,7 +40,8 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
-import LoginPageTest from "./pages/LoginPageTest";
+import LoginPageTest from "./pages/TestPages/LoginPageTest";
+import LoginTest from "./pages/TestPages/LoginTest";
 
 setupIonicReact();
 
@@ -54,7 +55,7 @@ const App: React.FC = () => (
         </Route>
 
         <Route exact path="/login">
-          <LoginPageTest />
+          <LoginPage />
         </Route>
 
         <Route path="/signup">
