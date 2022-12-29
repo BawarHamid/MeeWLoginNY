@@ -14,6 +14,8 @@ import {
   IonList,
   IonItem,
   IonCardContent,
+  useIonRouter,
+  IonButton,
 } from "@ionic/react";
 import {
   ellipsisHorizontalCircleOutline,
@@ -25,9 +27,16 @@ import {
   mailOutline,
   lockClosedOutline,
 } from "ionicons/icons";
+import { supabase } from "../supabaseConfig";
 import "./ProfilePage.css";
 
 const ProfilePage: React.FC = () => {
+  const router = useIonRouter();
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    router.push("/", "forward", "replace");
+  };
+
   return (
     <IonPage>
       <IonContent className="ion-padding" fullscreen>
@@ -75,6 +84,11 @@ const ProfilePage: React.FC = () => {
                   <IonBadge color="secondary">@testpassword</IonBadge>
                 </IonItem>
               </IonList>
+              <div className="ion-text-center">
+                <IonButton fill="clear" onClick={signOut}>
+                  Log Out
+                </IonButton>
+              </div>
             </IonCardContent>
           </IonCard>
         </IonCard>

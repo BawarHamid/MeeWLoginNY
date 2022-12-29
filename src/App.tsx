@@ -41,63 +41,129 @@ import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPageTest from "./pages/TestPages/LoginPageTest";
-import LoginTest from "./pages/TestPages/LoginTest";
+// import LoginTest from "./pages/TestPages/LoginTest";
+import { Session } from "@supabase/supabase-js";
+import { useState, useEffect } from "react";
+import { supabase } from "./supabaseConfig";
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      {/* <IonTabs> */}
-      <IonRouterOutlet>
-        <Route exact path="/index">
-          <WelcomePage />
-        </Route>
+const App: React.FC = () => {
+  const [session, setSession] = useState<Session | null>();
+  useEffect(() => {
+    const fetchSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setSession(data.session);
+    };
+    fetchSession();
+    supabase.auth.onAuthStateChange((_event: any, session: Session | null) => {
+      setSession(session);
+    });
+  }, []);
 
-        <Route exact path="/login">
-          <LoginPage />
-        </Route>
+  return (
+    <IonApp>
+      <IonReactRouter>
+        {/* <IonTabs> */}
+        <IonRouterOutlet>
+          <Route
+            exact
+            path="/index"
+            render={() => {
+              return session ? <Redirect to="/home" /> : <WelcomePage />;
+            }}
+          />
+          <Route
+            exact
+            path="/login"
+            render={() => {
+              return session ? <Redirect to="/home" /> : <LoginPage />;
+            }}
+          />
+          <Route
+            exact
+            path="/signup"
+            render={() => {
+              return session ? <Redirect to="/home" /> : <SignUpPage />;
+            }}
+          />
+          <Route
+            exact
+            path="/home"
+            render={() => {
+              return !session ? <Redirect to="/" /> : <HomePage />;
+            }}
+          />
+          <Route
+            exact
+            path="/profile"
+            render={() => {
+              return !session ? <Redirect to="/" /> : <ProfilePage />;
+            }}
+          />
 
-        <Route path="/signup">
-          <SignUpPage />
-        </Route>
+          {/* <Route exact path="/login">
+            <LoginPage></LoginPage>
+          </Route>
 
-        <Route path="/home">
-          <HomePage />
-        </Route>
+          <Route exact path="/signup">
+            <SignUpPage></SignUpPage>
+          </Route> */}
 
-        <Route path="/profile">
-          <ProfilePage />
-        </Route>
+          <Route exact path="/">
+            <Redirect to="/index" />
+          </Route>
 
-        <Route exact path="/">
-          <Redirect to="/index" />
-        </Route>
-      </IonRouterOutlet>
-      {/* <IonTabBar slot="bottom">
-          <IonTabButton tab="indexB" href="/index">
-            <IonIcon icon={ellipsisHorizontalCircleOutline} />
-            <IonLabel>MainMenu</IonLabel>
-          </IonTabButton>
-
-          <IonTabButton tab="loginB" href="/login">
-            <IonIcon icon={logInOutline} />
-            <IonLabel>Login</IonLabel>
-          </IonTabButton>
-
-          <IonTabButton tab="signupB" href="/signup">
-            <IonIcon icon={personAddOutline} />
-            <IonLabel>Sign Up</IonLabel>
-          </IonTabButton>
-
-          <IonTabButton tab="homeB" href="/home">
-            <IonIcon icon={homeOutline} />
-            <IonLabel>Home</IonLabel>
-          </IonTabButton>
-        </IonTabBar> */}
-      {/* </IonTabs> */}
-    </IonReactRouter>
-  </IonApp>
-);
+          {/* 
+          <Route exact path="/index">
+            <WelcomePage />
+          </Route>
+  
+          <Route exact path="/login">
+            <LoginPage />
+          </Route>
+  
+          <Route path="/signup">
+            <SignUpPage />
+          </Route>
+  
+          <Route path="/home">
+            <HomePage />
+          </Route>
+  
+          <Route path="/profile">
+            <ProfilePage />
+          </Route>
+  
+          <Route exact path="/">
+            <Redirect to="/index" />
+          </Route> */}
+        </IonRouterOutlet>
+        {/* <IonTabBar slot="bottom">
+            <IonTabButton tab="indexB" href="/index">
+              <IonIcon icon={ellipsisHorizontalCircleOutline} />
+              <IonLabel>MainMenu</IonLabel>
+            </IonTabButton>
+  
+            <IonTabButton tab="loginB" href="/login">
+              <IonIcon icon={logInOutline} />
+              <IonLabel>Login</IonLabel>
+            </IonTabButton>
+  
+            <IonTabButton tab="signupB" href="/signup">
+              <IonIcon icon={personAddOutline} />
+              <IonLabel>Sign Up</IonLabel>
+            </IonTabButton>
+  
+            <IonTabButton tab="homeB" href="/home">
+              <IonIcon icon={homeOutline} />
+              <IonLabel>Home</IonLabel>
+            </IonTabButton>
+          </IonTabBar> */}
+        {/* </IonTabs> */}
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

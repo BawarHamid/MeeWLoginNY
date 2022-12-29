@@ -26,7 +26,7 @@ const SignUpPage: React.FC = () => {
   // const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  console.log(supabase);
+  // console.log(supabase);
   return (
     <IonPage>
       <IonContent className="ion-padding" fullscreen>
