@@ -30,30 +30,68 @@ const LoginPage: React.FC = () => {
   const history = useHistory();
   const [showLoading, hideLoading] = useIonLoading();
   const [showToast] = useIonToast();
+  const [message, setMessage] = useState({});
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log();
     e.preventDefault();
     await showLoading();
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
 
+    const { error, data } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    await hideLoading();
+    if (error) {
+      console.error(error);
+      setMessage({
+        message: error.message ? error.message : "Something went wrong",
+        type: "error",
+      });
+      showToast({
+        message: "Invalid E-mail or Password!",
+        duration: 2000,
+        color: "danger",
+      });
+    } else {
       showToast({
         message: "You are now logged in!",
         duration: 500,
         color: "success",
       });
-    } catch (e: any) {
-      await showToast({
-        message: e.error_description || e.message,
-        duration: 1000,
-      });
-    } finally {
-      await hideLoading();
     }
+    // if (!data) {
+    //   showToast({
+    //     message: "You are now logged in!",
+    //     duration: 500,
+    //     color: "success",
+    //   });
+    // }
   };
+
+  // console.log();
+  // e.preventDefault();
+  // await showLoading();
+  // try {
+  //   const { data, error } = await supabase.auth.signInWithPassword({
+  //     email,
+  //     password,
+  //   });
+
+  //   showToast({
+  //     message: "You are now logged in!",
+  //     duration: 500,
+  //     color: "success",
+  //   });
+  // }
+
+  // catch (e: any) {
+  //   await showToast({
+  //     message: e.error_description || e.message,
+  //     duration: 1000,
+  //   });
+  // } finally {
+  //   await hideLoading();
+  // }
+  // };
 
   return (
     <IonPage>
