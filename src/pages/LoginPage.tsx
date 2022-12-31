@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
       email,
       password,
     });
-    await hideLoading();
+
     if (error) {
       console.error(error);
       setMessage({
@@ -47,17 +47,18 @@ const LoginPage: React.FC = () => {
         type: "error",
       });
       showToast({
-        message: "Invalid E-mail or Password!",
-        duration: 2000,
+        message: `${error}`,
+        duration: 1000,
         color: "danger",
       });
     } else {
       showToast({
         message: "You are now logged in!",
-        duration: 500,
+        duration: 100,
         color: "success",
       });
     }
+    await hideLoading();
     // if (!data) {
     //   showToast({
     //     message: "You are now logged in!",
@@ -112,12 +113,12 @@ const LoginPage: React.FC = () => {
           </IonCard>
           <br />
           <IonItem>
-            <IonIcon size="medium" slot="end" icon={mailOutline} />
+            E <IonIcon size="medium" slot="end" icon={mailOutline} />
             <IonLabel position="floating">Email:</IonLabel>
             <IonInput
               onIonChange={(e) => setEmail(e.detail.value ?? "")}
               value={email}
-              placeholder="Enter e-mail"
+              placeholder="nter e-mail"
               type="email"
               required
             />
