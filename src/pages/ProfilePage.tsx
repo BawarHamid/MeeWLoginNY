@@ -1,7 +1,6 @@
 import {
   IonContent,
   IonPage,
-  IonAvatar,
   IonTabButton,
   IonLabel,
   IonIcon,
@@ -32,11 +31,11 @@ import {
   fingerPrintOutline,
   logOutOutline,
   pencilOutline,
+  bagAddOutline,
 } from "ionicons/icons";
 import { supabase } from "../supabaseConfig";
 import { useEffect, useState } from "react";
 import "./ProfilePage.css";
-import { profile } from "console";
 
 const ProfilePage: React.FC = () => {
   const [session] = useState(() => supabase.auth.getSession());
@@ -57,7 +56,7 @@ const ProfilePage: React.FC = () => {
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
-    // await showLoading();
+    await showLoading();
 
     try {
       const user = supabase.auth.getUser();
@@ -105,9 +104,7 @@ const ProfilePage: React.FC = () => {
   };
 
   const getProfile = async () => {
-    console.log("get");
     // await showLoading();
-
     try {
       const user = supabase.auth.getUser();
       let { data, status, error } = await supabase
@@ -136,11 +133,9 @@ const ProfilePage: React.FC = () => {
         duration: 1000,
         color: "danger",
       });
+    } finally {
+      await hideLoading();
     }
-
-    // finally {
-    //   await hideLoading();
-    // }
   };
 
   return (
@@ -169,7 +164,20 @@ const ProfilePage: React.FC = () => {
                   />
                 </IonAvatar>
               </IonCardTitle> */}
-                <IonCardSubtitle>{userprofile.jobtitle}</IonCardSubtitle>
+                <IonCardSubtitle>
+                  {/* <IonIcon slot="start" icon={bagAddOutline} /> */}
+                  {/* <IonLabel>User Id:</IonLabel> */}
+                  <IonInput
+                    color={"success"}
+                    value={userprofile.jobtitle}
+                    onIonChange={(e) =>
+                      setUserProfile({
+                        ...userprofile,
+                        jobtitle: e.detail.value ?? "",
+                      })
+                    }
+                  ></IonInput>
+                </IonCardSubtitle>
               </IonCardHeader>
               <IonCardContent>
                 <IonList className="info-list">

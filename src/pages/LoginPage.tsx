@@ -113,12 +113,12 @@ const LoginPage: React.FC = () => {
           </IonCard>
           <br />
           <IonItem>
-            E <IonIcon size="medium" slot="end" icon={mailOutline} />
+            <IonIcon size="medium" slot="end" icon={mailOutline} />
             <IonLabel position="floating">Email:</IonLabel>
             <IonInput
               onIonChange={(e) => setEmail(e.detail.value ?? "")}
               value={email}
-              placeholder="nter e-mail"
+              placeholder="Enter e-mail"
               type="email"
               required
             />
