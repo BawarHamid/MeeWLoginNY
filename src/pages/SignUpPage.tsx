@@ -27,7 +27,10 @@ import { Link } from "react-router-dom";
 const SignUpPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullname, setFullname] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [age, setAge] = useState("");
   const [showLoading, hideLoading] = useIonLoading();
   const [showToast] = useIonToast();
   // const [message, setMessage] = useState({});
@@ -38,43 +41,43 @@ const SignUpPage: React.FC = () => {
       email,
       password,
     });
-    try {
+    if (error) {
+      console.error(error);
+      showToast({
+        message: `${error}`,
+        duration: 1000,
+        color: "danger",
+      });
+    } else {
       const supabaseAuthUser = supabase.auth.getUser();
       var userId;
 
       supabaseAuthUser.then((val) => {
         userId = val.data.user!.id;
         // console.log(userId);
-
         supabase
           .from("users")
           .insert({
             id: userId,
             email: email,
             password: password,
-            fullname: fullname,
+            firstname: firstname,
+            lastname: lastname,
+            address: address,
+            age: age,
           })
           .select()
           .then((response) => {
             console.log(response);
           });
+        showToast({
+          message: "Sign up success!",
+          duration: 700,
+          color: "success",
+        });
       });
-
-      showToast({
-        message: "Sign up success!",
-        duration: 700,
-        color: "success",
-      });
-    } catch (error) {
-      console.error(error);
-      showToast({
-        message: "WRONG INPUT!",
-        duration: 2000,
-        color: "danger",
-      });
-    } finally {
-      hideLoading();
     }
+    await hideLoading();
   };
 
   return (
@@ -96,18 +99,51 @@ const SignUpPage: React.FC = () => {
           </IonCard>
           <IonCardContent>
             <IonItem>
-              <IonLabel position="floating">Full Name:</IonLabel>
+              <IonLabel position="floating">First name:</IonLabel>
               <IonInput
-                onIonChange={(e) => setFullname(e.detail.value ?? "")}
-                value={fullname}
-                placeholder="Enter full name"
+                onIonChange={(e) => setFirstName(e.detail.value ?? "")}
+                value={firstname}
+                placeholder="Enter first name..."
                 type="text"
                 required
               />
             </IonItem>
 
             <IonItem>
-              <IonLabel position="floating">Email:</IonLabel>
+              <IonLabel position="floating">Last name:</IonLabel>
+              <IonInput
+                onIonChange={(e) => setLastName(e.detail.value ?? "")}
+                value={lastname}
+                placeholder="Enter last name..."
+                type="text"
+                required
+              />
+            </IonItem>
+
+            <IonItem>
+              <IonLabel position="floating">Address:</IonLabel>
+              <IonInput
+                onIonChange={(e) => setAddress(e.detail.value ?? "")}
+                value={address}
+                placeholder="Enter address..."
+                type="text"
+                required
+              />
+            </IonItem>
+
+            <IonItem>
+              <IonLabel position="floating">Age:</IonLabel>
+              <IonInput
+                onIonChange={(e) => setAge(e.detail.value ?? "")}
+                value={age}
+                placeholder="Enter age..."
+                type="number"
+                required
+              />
+            </IonItem>
+
+            <IonItem>
+              <IonLabel position="floating">E-mail:</IonLabel>
               <IonInput
                 onIonChange={(e) => setEmail(e.detail.value ?? "")}
                 value={email}

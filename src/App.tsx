@@ -91,14 +91,14 @@ const App: React.FC = () => {
             exact
             path="/home"
             render={() => {
-              return !session ? <Redirect to="/" /> : <HomePage />;
+              return !session ? <Redirect to="/index" /> : <HomePage />;
             }}
           />
           <Route
             exact
             path="/profile"
             render={() => {
-              return !session ? <Redirect to="/" /> : <ProfilePage />;
+              return !session ? <Redirect to="/index" /> : <ProfilePage />;
             }}
           />
 
