@@ -67,9 +67,7 @@ const WelcomePage: React.FC = () => {
             </div>
 
             <div className="meewlinkWCP">
-              <a href="https://www.meew.dk/">
-                Visit our main website, click here!
-              </a>
+              <a href="https://www.meew.dk/">Visit our main website!</a>
             </div>
           </IonCardContent>
         </IonCard>

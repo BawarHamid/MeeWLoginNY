@@ -12,6 +12,8 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonTabBar,
+  useIonRouter,
+  useIonAlert,
 } from "@ionic/react";
 import {
   ellipsisHorizontalCircleOutline,
@@ -19,10 +21,20 @@ import {
   personAddOutline,
   homeOutline,
   personCircleOutline,
+  logOutOutline,
 } from "ionicons/icons";
+import { supabase } from "../supabaseConfig";
 import "./HomePage.css";
 
 const HomePage: React.FC = () => {
+  const router = useIonRouter();
+  const [presentAlert] = useIonAlert();
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    router.push("/", "forward", "replace");
+  };
+
   return (
     <IonPage>
       <IonContent className="ion-padding" fullscreen>
@@ -41,7 +53,7 @@ const HomePage: React.FC = () => {
         </IonCard>
       </IonContent>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="indexB" href="/index">
+        {/* <IonTabButton tab="indexB" href="/index">
           <IonIcon icon={ellipsisHorizontalCircleOutline} />
           <IonLabel>MainMenu</IonLabel>
         </IonTabButton>
@@ -54,7 +66,7 @@ const HomePage: React.FC = () => {
         <IonTabButton tab="signupB" href="/signup">
           <IonIcon icon={personAddOutline} />
           <IonLabel>Sign Up</IonLabel>
-        </IonTabButton>
+        </IonTabButton> */}
 
         <IonTabButton tab="homeB" href="/home">
           <IonIcon icon={homeOutline} />
@@ -64,6 +76,31 @@ const HomePage: React.FC = () => {
         <IonTabButton tab="profile" href="/profile">
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Profile</IonLabel>
+        </IonTabButton>
+
+        <IonTabButton
+          tab="logout"
+          onClick={() => {
+            presentAlert({
+              header: "Logging out...",
+              buttons: [
+                {
+                  text: "Cancel",
+                  role: "cancel",
+                },
+                {
+                  text: "Confirm",
+                  role: "confirm",
+                  handler: () => {
+                    signOut();
+                  },
+                },
+              ],
+            });
+          }}
+        >
+          <IonIcon icon={logOutOutline} />
+          <IonLabel>Log out</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonPage>

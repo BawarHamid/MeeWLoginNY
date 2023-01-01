@@ -17,6 +17,7 @@ import {
   useIonLoading,
   IonInput,
   useIonToast,
+  useIonAlert,
 } from "@ionic/react";
 import {
   ellipsisHorizontalCircleOutline,
@@ -41,8 +42,8 @@ const ProfilePage: React.FC = () => {
   const [session] = useState(() => supabase.auth.getSession());
   const [showLoading, hideLoading] = useIonLoading();
   const [showToast] = useIonToast();
+  const [presentAlert] = useIonAlert();
   const router = useIonRouter();
-
   const [userprofile, setUserProfile] = useState({
     id: "",
     email: "",
@@ -60,7 +61,6 @@ const ProfilePage: React.FC = () => {
 
     try {
       const user = supabase.auth.getUser();
-
       const updates = {
         // id: userprofile.id,
         // email: userprofile.email,
@@ -92,6 +92,7 @@ const ProfilePage: React.FC = () => {
         color: "danger",
       });
     }
+    hideLoading();
   };
 
   useEffect(() => {
@@ -104,7 +105,6 @@ const ProfilePage: React.FC = () => {
   };
 
   const getProfile = async () => {
-    // await showLoading();
     try {
       const user = supabase.auth.getUser();
       let { data, status, error } = await supabase
@@ -133,8 +133,6 @@ const ProfilePage: React.FC = () => {
         duration: 1000,
         color: "danger",
       });
-    } finally {
-      await hideLoading();
     }
   };
 
@@ -156,17 +154,7 @@ const ProfilePage: React.FC = () => {
             </IonCardHeader>
             <IonCard className="info-card">
               <IonCardHeader>
-                {/* <IonCardTitle>
-                <IonAvatar className="profile-avatar">
-                  <img
-                    src="https://cdn2.iconfinder.com/data/icons/people-3-2/128/Programmer-Avatar-Backend-Developer-Nerd-512.png"
-                    alt="avatar"
-                  />
-                </IonAvatar>
-              </IonCardTitle> */}
                 <IonCardSubtitle>
-                  {/* <IonIcon slot="start" icon={bagAddOutline} /> */}
-                  {/* <IonLabel>User Id:</IonLabel> */}
                   <IonInput
                     color={"success"}
                     value={userprofile.jobtitle}
@@ -258,7 +246,7 @@ const ProfilePage: React.FC = () => {
 
                 <div className="ion-text-center">
                   <IonButton
-                    className="updatebtn"
+                    className="updatebtnprof"
                     color="warning"
                     type="submit"
                   >
@@ -269,7 +257,7 @@ const ProfilePage: React.FC = () => {
                     ></IonIcon>
                     Update profile!
                   </IonButton>
-
+                  {/* 
                   <IonButton
                     className="logoutbtn"
                     color="danger"
@@ -281,7 +269,7 @@ const ProfilePage: React.FC = () => {
                       icon={logOutOutline}
                     ></IonIcon>
                     Logout!
-                  </IonButton>
+                  </IonButton> */}
                 </div>
               </IonCardContent>
             </IonCard>
@@ -289,7 +277,7 @@ const ProfilePage: React.FC = () => {
         </form>
       </IonContent>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="indexB" href="/index">
+        {/* <IonTabButton tab="indexB" href="/index">
           <IonIcon icon={ellipsisHorizontalCircleOutline} />
           <IonLabel>MainMenu</IonLabel>
         </IonTabButton>
@@ -302,7 +290,7 @@ const ProfilePage: React.FC = () => {
         <IonTabButton tab="signupB" href="/signup">
           <IonIcon icon={personAddOutline} />
           <IonLabel>Sign Up</IonLabel>
-        </IonTabButton>
+        </IonTabButton> */}
 
         <IonTabButton tab="homeB" href="/home">
           <IonIcon icon={homeOutline} />
@@ -312,6 +300,31 @@ const ProfilePage: React.FC = () => {
         <IonTabButton tab="profile" href="/profile">
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Profile</IonLabel>
+        </IonTabButton>
+
+        <IonTabButton
+          tab="logout"
+          onClick={() => {
+            presentAlert({
+              header: "Logging out...",
+              buttons: [
+                {
+                  text: "Cancel",
+                  role: "cancel",
+                },
+                {
+                  text: "Confirm",
+                  role: "confirm",
+                  handler: () => {
+                    signOut();
+                  },
+                },
+              ],
+            });
+          }}
+        >
+          <IonIcon icon={logOutOutline} />
+          <IonLabel>Log out</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonPage>

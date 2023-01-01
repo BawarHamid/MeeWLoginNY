@@ -2,7 +2,7 @@
   width: 375px;
   margin: auto;
   margin-top: auto;
-  padding-bottom: 10%;
+  padding-bottom: 15%;
   /* længden af card */
 }
 
@@ -16,4 +16,8 @@
 
 .info-list {
   margin-top: auto;
+}
+
+.updatebtnprof {
+  margin-top: 15px;
 }
