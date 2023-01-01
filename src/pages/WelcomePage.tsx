@@ -68,7 +68,6 @@ const WelcomePage: React.FC = () => {
 
             <div className="meewlinkWCP">
               <a href="https://www.meew.dk/">
-                <br />
                 Visit our main website, click here!
               </a>
             </div>
