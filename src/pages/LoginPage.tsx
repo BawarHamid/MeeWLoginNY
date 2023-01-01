@@ -19,8 +19,6 @@ import {
 } from "@ionic/react";
 import { logInOutline, lockClosedOutline, mailOutline } from "ionicons/icons";
 import "./LoginPage.css";
-
-// import { SignInAsync } from "../supabaseConfig";
 import { supabase } from "../supabaseConfig";
 import { Link, useHistory } from "react-router-dom";
 
@@ -59,40 +57,7 @@ const LoginPage: React.FC = () => {
       });
     }
     await hideLoading();
-    // if (!data) {
-    //   showToast({
-    //     message: "You are now logged in!",
-    //     duration: 500,
-    //     color: "success",
-    //   });
-    // }
   };
-
-  // console.log();
-  // e.preventDefault();
-  // await showLoading();
-  // try {
-  //   const { data, error } = await supabase.auth.signInWithPassword({
-  //     email,
-  //     password,
-  //   });
-
-  //   showToast({
-  //     message: "You are now logged in!",
-  //     duration: 500,
-  //     color: "success",
-  //   });
-  // }
-
-  // catch (e: any) {
-  //   await showToast({
-  //     message: e.error_description || e.message,
-  //     duration: 1000,
-  //   });
-  // } finally {
-  //   await hideLoading();
-  // }
-  // };
 
   return (
     <IonPage>

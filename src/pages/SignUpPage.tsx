@@ -33,7 +33,7 @@ const SignUpPage: React.FC = () => {
   const [age, setAge] = useState("");
   const [showLoading, hideLoading] = useIonLoading();
   const [showToast] = useIonToast();
-  // const [message, setMessage] = useState({});
+
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await showLoading();
