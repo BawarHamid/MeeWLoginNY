@@ -169,11 +169,11 @@ const ProfilePage: React.FC = () => {
               </IonCardHeader>
               <IonCardContent>
                 <IonList className="info-list">
-                  <IonItem>
+                  {/* <IonItem> -- id
                     <IonIcon slot="start" icon={fingerPrintOutline} />
                     <IonLabel>User Id:</IonLabel>
                     <IonInput value={userprofile.id} disabled></IonInput>
-                  </IonItem>
+                  </IonItem> */}
 
                   <IonItem>
                     <IonIcon slot="start" icon={personOutline} />
@@ -237,11 +237,11 @@ const ProfilePage: React.FC = () => {
                     <IonInput value={userprofile.email} disabled></IonInput>
                   </IonItem>
 
-                  <IonItem>
+                  {/* <IonItem> -- password
                     <IonIcon slot="start" icon={lockClosedOutline} />
                     <IonLabel>Password:</IonLabel>
                     <IonInput value={userprofile.password} disabled></IonInput>
-                  </IonItem>
+                  </IonItem> */}
                 </IonList>
 
                 <div className="ion-text-center">
