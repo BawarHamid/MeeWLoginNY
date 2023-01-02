@@ -30,6 +30,7 @@ const SignUpPage: React.FC = () => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [address, setAddress] = useState("");
+  const [job, setJob] = useState("");
   const [age, setAge] = useState("");
   const [showLoading, hideLoading] = useIonLoading();
   const [showToast] = useIonToast();
@@ -149,6 +150,17 @@ const SignUpPage: React.FC = () => {
                 value={email}
                 placeholder="Enter email"
                 type="email"
+                required
+              />
+            </IonItem>
+
+            <IonItem>
+              <IonLabel position="floating">Current Job:</IonLabel>
+              <IonInput
+                onIonChange={(e) => setJob(e.detail.value ?? "")}
+                value={job}
+                placeholder="Enter job..."
+                type="text"
                 required
               />
             </IonItem>
