@@ -66,6 +66,7 @@ const SignUpPage: React.FC = () => {
             lastname: lastname,
             address: address,
             age: age,
+            job: job,
           })
           .select()
           .then((response) => {
@@ -144,23 +145,23 @@ const SignUpPage: React.FC = () => {
             </IonItem>
 
             <IonItem>
-              <IonLabel position="floating">E-mail:</IonLabel>
-              <IonInput
-                onIonChange={(e) => setEmail(e.detail.value ?? "")}
-                value={email}
-                placeholder="Enter email"
-                type="email"
-                required
-              />
-            </IonItem>
-
-            <IonItem>
               <IonLabel position="floating">Current Job:</IonLabel>
               <IonInput
                 onIonChange={(e) => setJob(e.detail.value ?? "")}
                 value={job}
                 placeholder="Enter job..."
                 type="text"
+                required
+              />
+            </IonItem>
+
+            <IonItem>
+              <IonLabel position="floating">E-mail:</IonLabel>
+              <IonInput
+                onIonChange={(e) => setEmail(e.detail.value ?? "")}
+                value={email}
+                placeholder="Enter email"
+                type="email"
                 required
               />
             </IonItem>

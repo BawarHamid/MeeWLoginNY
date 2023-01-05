@@ -237,11 +237,11 @@ const ProfilePage: React.FC = () => {
                     <IonInput value={userprofile.email} disabled></IonInput>
                   </IonItem>
 
-                  {/* <IonItem> -- password
+                  <IonItem>
                     <IonIcon slot="start" icon={lockClosedOutline} />
                     <IonLabel>Password:</IonLabel>
                     <IonInput value={userprofile.password} disabled></IonInput>
-                  </IonItem> */}
+                  </IonItem>
                 </IonList>
 
                 <div className="ion-text-center">
