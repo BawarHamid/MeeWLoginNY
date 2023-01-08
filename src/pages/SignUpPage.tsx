@@ -30,7 +30,7 @@ const SignUpPage: React.FC = () => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [address, setAddress] = useState("");
-  const [job, setJob] = useState("");
+  const [jobtitle, setJobTitle] = useState("");
   const [age, setAge] = useState("");
   const [showLoading, hideLoading] = useIonLoading();
   const [showToast] = useIonToast();
@@ -57,7 +57,7 @@ const SignUpPage: React.FC = () => {
         userId = val.data.user!.id;
         // console.log(userId);
         supabase
-          .from("users")
+          .from("UserProfile")
           .insert({
             id: userId,
             email: email,
@@ -66,7 +66,7 @@ const SignUpPage: React.FC = () => {
             lastname: lastname,
             address: address,
             age: age,
-            job: job,
+            jobtitle: jobtitle,
           })
           .select()
           .then((response) => {
@@ -147,8 +147,8 @@ const SignUpPage: React.FC = () => {
             <IonItem>
               <IonLabel position="floating">Current Job:</IonLabel>
               <IonInput
-                onIonChange={(e) => setJob(e.detail.value ?? "")}
-                value={job}
+                onIonChange={(e) => setJobTitle(e.detail.value ?? "")}
+                value={jobtitle}
                 placeholder="Enter job..."
                 type="text"
                 required
