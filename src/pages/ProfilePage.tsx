@@ -76,7 +76,7 @@ const ProfilePage: React.FC = () => {
       };
 
       let { data, error } = await supabase
-        .from("users")
+        .from("UserProfile")
         .upsert(updates)
         .select();
 
@@ -108,7 +108,7 @@ const ProfilePage: React.FC = () => {
     try {
       const user = supabase.auth.getUser();
       let { data, status, error } = await supabase
-        .from("users")
+        .from("UserProfile")
         .select(
           "id, email, password, firstname, lastname, address, age, jobtitle"
         )
