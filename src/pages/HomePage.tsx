@@ -1,3 +1,6 @@
+import { Carousel, Button, Space } from "antd";
+import React from "react";
+import useStore from "../GlobalStore";
 import {
   IonContent,
   IonHeader,
@@ -35,6 +38,8 @@ const HomePage: React.FC = () => {
     router.push("/", "forward", "replace");
   };
 
+  const { count, increment, decrement } = useStore();
+
   return (
     <IonPage>
       <IonContent className="ion-padding" fullscreen>
@@ -51,7 +56,53 @@ const HomePage: React.FC = () => {
             <IonCardSubtitle>MeeW Studios</IonCardSubtitle>
           </IonCardHeader>
         </IonCard>
+
+        <Carousel
+          autoplay
+          effect="fade"
+          speed={4000}
+          className="homeCarousel"
+          dots
+        >
+          <div>
+            <img
+              src="https://wallpaperaccess.com/full/5120324.jpg"
+              alt="image1"
+            />
+          </div>
+          <div>
+            <img
+              src="https://www.pixelstalk.net/wp-content/uploads/2016/03/Nice-Backgrounds-for-desktop-download.jpg"
+              alt="image2"
+            />
+          </div>
+          <div>
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616__480.jpg"
+              alt="image3"
+            />
+          </div>
+          <div>
+            <img
+              src="https://wallpaperaccess.com/full/5030514.jpg"
+              alt="image4"
+            />
+          </div>
+        </Carousel>
+
+        <div>
+          <p>Count: {count}</p>
+          <Space wrap>
+            <Button onClick={increment} type="primary" danger>
+              Increment
+            </Button>
+            <Button onClick={decrement} ghost>
+              Decrement
+            </Button>
+          </Space>
+        </div>
       </IonContent>
+
       <IonTabBar slot="bottom">
         {/* <IonTabButton tab="indexB" href="/index">
           <IonIcon icon={ellipsisHorizontalCircleOutline} />
