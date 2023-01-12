@@ -7,13 +7,10 @@ import {
   IonCardSubtitle,
   IonCardContent,
   IonContent,
-  IonHeader,
   IonInput,
   IonItem,
   IonLabel,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonIcon,
   useIonLoading,
   useIonToast,
@@ -38,7 +35,7 @@ const SignUpPage: React.FC = () => {
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await showLoading();
-    const { error, data } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
     });

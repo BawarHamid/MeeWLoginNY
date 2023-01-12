@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, Checkbox, Form, Input } from "antd";
 // import {
 //   IonButton,
 //   IonContent,
@@ -17,139 +18,85 @@ import { useState } from "react";
 //   IonCardTitle,
 // } from "@ionic/react";
 // import { logInOutline, lockClosedOutline, mailOutline } from "ionicons/icons";
-// import "./LoginPage.css";
+// import "./LoginTest.css";
 
-// // import { SignInAsync } from "../supabaseConfig";
-// import { supabase } from "../supabaseConfig";
+import { supabase } from "../../supabaseConfig";
 // import { Link, useHistory } from "react-router-dom";
 
-// const LoginPage: React.FC = () => {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [showToast] = useIonToast();
-//   const history = useHistory();
+const LoginTest: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState({});
 
-//   // console.log(
-//   //   `${supabase ? "You are now logged in" : "Invalid E-mail or Password"}`
-//   // );
-//   async function SignUpUser() {
-//     console.log(email, password);
-//     const user = await supabase
-//       .from("users")
-//       .select("email, password")
-//       .match({ email: email, password: password });
+  const onFinish = (values: any) => {
+    console.log("Success:", values);
+  };
 
-//     const { data, error } = await supabase.auth.signInWithPassword({
-//       email,
-//       password,
-//     });
-//     console.log(user);
-//     if (user!) {
-//       showToast({
-//         message: "Invalid E-mail or Password",
-//         color: "danger",
-//         duration: 10000,
-//         buttons: [
-//           {
-//             text: "Dismiss",
-//             role: "cancel",
-//           },
-//         ],
-//       });
-//     } else {
-//       history.push("/home");
-//       showToast({
-//         message: "You are now logged in!",
-//         duration: 6000,
-//         color: "success",
-//       });
-//     }
-//     // history.push("/home");
-//     // showToast({
-//     //   message: "You are now logged in!",
-//     //   duration: 6000,
-//     //   color: "success",
-//     // });
-//   }
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
 
-//   // async function LoginUser() {
-//   //   await SignInAsync(email, password);
-//   //     console.log(
-//   //       `${supabase ? "You are now logged in" : "Invalid E-mail or Password"}`
-//   //     );
-//   //     console.log(
-//   //       `${result ? "You are now logged in" : "Invalid E-mail or Password"}`
-//   //     );
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
 
-//   // }
+  return (
+    <Form
+      className="loginform"
+      name="basic"
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="off"
+    >
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[{ required: true, message: "Please input your email!" }]}
+      >
+        <Input
+          onChange={(e) => setEmail(e.target.value ?? "")}
+          value={email}
+          type={email}
+          required
+        />
+      </Form.Item>
 
-//   return (
-//     <IonPage>
-//       <IonContent className="ion-padding" fullscreen>
-//         <IonCard className="loginCard">
-//           <img
-//             height="170 px"
-//             width="350 px"
-//             alt="meewLogo"
-//             className="logoLP"
-//             src="https://lh3.googleusercontent.com/p/AF1QipO0N52UJYUlZmU9ubcak8yZ5g0PyqnzNHM3SN9F=s1360-w1360-h1020"
-//           />
-//           <IonCardHeader>
-//             <IonCardTitle>Login:</IonCardTitle>
-//             <IonCardSubtitle>MeeW Studios</IonCardSubtitle>
-//           </IonCardHeader>
-//         </IonCard>
-//         <br />
-//         <IonItem>
-//           <IonIcon size="medium" slot="end" icon={mailOutline} />
-//           <IonLabel position="floating">Email:</IonLabel>
-//           <IonInput
-//             // onIonChange={(e) => setEmail(e.detail.value ?? "")}
-//             onIonChange={(e) => setEmail(e.detail.value!)}
-//             value={email}
-//             placeholder="Enter e-mail"
-//             type="email"
-//             required
-//           />
-//         </IonItem>
-//         <br />
-//         <br />
-//         <IonItem>
-//           <IonIcon size="medium" slot="end" icon={lockClosedOutline} />
-//           <IonLabel position="floating">Password:</IonLabel>
-//           <IonInput
-//             // onIonChange={(e) => setPassword(e.detail.value ?? "")}
-//             onIonChange={(e) => setPassword(e.detail.value!)}
-//             value={password}
-//             placeholder="Enter password"
-//             type="password"
-//             required
-//           />
-//         </IonItem>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: "Please input your password!" }]}
+      >
+        <Input.Password
+          onChange={(e) => setPassword(e.target.value ?? "")}
+          value={password}
+          type={password}
+          required
+        />
+      </Form.Item>
 
-//         <div className="ion-text-center">
-//           <IonButton
-//             onClick={
-//               () => SignUpUser()
-//               // supabase.auth.signInWithPassword({ email, password })
-//               // LoginUser()
-//             }
-//             className="loginPageButton"
-//             color="secondary"
-//           >
-//             <IonIcon size="medium" slot="start" icon={logInOutline} />
-//             Login
-//           </IonButton>
-//         </div>
-//         <br />
-//         <div className="meewlinkLP">
-//           <p>
-//             Don't have an account? <Link to="signup">Sign up</Link>
-//           </p>
-//         </div>
-//       </IonContent>
-//     </IonPage>
-//   );
-// };
+      <Form.Item
+        name="remember"
+        valuePropName="checked"
+        wrapperCol={{ offset: 8, span: 16 }}
+      >
+        <Checkbox>Remember me</Checkbox>
+      </Form.Item>
 
-// export default LoginPage;
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Button
+          type="primary"
+          onSubmit={handleLogin}
+          htmlType={"submit"}
+          onClick={() => supabase.auth.signInWithPassword({ email, password })}
+        >
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
+
+export default LoginTest;
