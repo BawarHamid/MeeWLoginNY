@@ -1,9 +1,9 @@
 import { create } from "zustand";
-interface CountState {
-  count: any;
-  increment: any;
-  decrement: any;
-}
+type CountState = {
+  count: number;
+  increment: () => void;
+  decrement: () => void;
+};
 
 const useStore = create<CountState>()((set) => ({
   count: 0,

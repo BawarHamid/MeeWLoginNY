@@ -58,11 +58,11 @@ const HomePage: React.FC = () => {
         </IonCard>
 
         <Carousel
-          autoplay
-          effect="fade"
-          speed={4000}
+          // autoplay
+          // effect="fade"
+          // speed={4000}
           className="homeCarousel"
-          dots
+          // dots
         >
           <div>
             <img
